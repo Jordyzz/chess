@@ -6,13 +6,12 @@ import store from '@redux/store';
 import App from './App';
 import { themeService } from '@core/ThemeService';
 import GlobalBusyIndicator from '@components/GlobalBusyIndicator';
-import { weatherService } from '@core/WeatherService';
 
 function Root() {
   const [showApp, setShowApp] = useState(false);
 
   useEffect(() => {
-    Promise.all([weatherService.getSavedFavorites(), themeService.init()]).then(() => {
+    Promise.all([themeService.init()]).then(() => {
       setShowApp(true);
     });
   }, []);

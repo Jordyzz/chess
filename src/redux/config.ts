@@ -15,11 +15,6 @@ export const setTheme = (payload): StoreAction => ({
   payload
 });
 
-export const setTempType = (payload): StoreAction => ({
-  type: 'config/SET_TEMP_TYPE',
-  payload
-});
-
 export const addError = (payload): StoreAction => ({
   type: 'config/ADD_ERROR',
   payload
@@ -30,7 +25,6 @@ export const clearErrors = (): StoreAction => ({
 });
 
 const initialState: ConfigState = {
-  tempType: 'f',
   theme: 'light',
   busyCounter: 0,
   errorMessages: []

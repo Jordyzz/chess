@@ -1,9 +1,8 @@
-import { Temperature, Forecast } from '@components/LocationForecast/LocationForecast.interface';
+import { Piece } from '@core/Pieces/Piece';
 
 export interface StoreState {
   config: ConfigState;
-  favorites: FavoritesState;
-  currentLocation: CurrentLocationState;
+  game: GameState;
 }
 
 export interface StoreAction {
@@ -13,25 +12,15 @@ export interface StoreAction {
 
 export interface ConfigState {
   theme: string;
-  tempType: TempType;
   busyCounter: number;
   errorMessages: Array<string>;
 }
 
-export interface CurrentLocationState {
-  id: string;
-  name: string;
-  forecast: Array<Forecast>;
+export interface GameState {
+  board: Array<Array<BoardSquare>>;
 }
 
-export type TempType = 'f' | 'c';
-
-export type FavoritesState = Array<Favorite>;
-
-export interface Favorite {
-  id: string;
-  name: string;
-  description: string;
-  temperature: Temperature;
-  iconId?: number;
+export interface BoardSquare {
+  index: number;
+  piece: Piece;
 }

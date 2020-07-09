@@ -1,13 +1,11 @@
 import { combineReducers, Reducer } from 'redux';
 import * as RI from './redux.interface';
 import configReducer from './config';
-import favoritesReducer from './favorites';
-import currentLocationReducer from './currentLocation';
+import gameReducer from './game';
 
 const rootReducer = combineReducers({
   config: configReducer as Reducer<RI.ConfigState>,
-  favorites: favoritesReducer as Reducer<RI.FavoritesState>,
-  currentLocation: currentLocationReducer as Reducer<RI.CurrentLocationState>
+  game: gameReducer as Reducer<RI.GameState>
 });
 
 export default rootReducer;
