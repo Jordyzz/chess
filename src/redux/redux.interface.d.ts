@@ -17,10 +17,6 @@ export interface ConfigState {
 }
 
 export interface GameState {
-  board: Array<Array<BoardSquare>>;
-}
-
-export interface BoardSquare {
-  index: number;
-  piece: Piece;
+  board: Array<Piece>;
+  selectedPiece: Piece;
 }

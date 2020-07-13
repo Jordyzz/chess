@@ -1,5 +1,5 @@
-import { dispatch } from '@src/redux/store';
-import { updateBoard } from '@redux/game';
+import { dispatch, getState } from '@redux/store';
+import { updateBoard, setSelectedPiece } from '@redux/game';
 import { Rook } from './Pieces/Rook';
 import { Queen } from './Pieces/Queen';
 import { King } from './Pieces/King';
@@ -9,39 +9,38 @@ import { Knight } from './Pieces/Knight';
 
 class GameService {
   initBoard() {
-    let counter = 0;
-    const gameArr = Array.from(Array(8), () => new Array(8).fill(null));
-    gameArr.map((c, cIdx) => {
-      return c.map((r, rIdx) => {
-        gameArr[cIdx][rIdx] = { index: counter, piece: null };
-        counter++;
-      });
-    });
+    const gameArr = Array(64).fill(null);
 
-    for (let i = 0; i < 8; i++) {
-      gameArr[6][i].piece = new Pawn(1);
-      gameArr[1][i].piece = new Pawn(2);
+    for (let i = 8; i < 16; i++) {
+      gameArr[i + 40] = new Pawn(1);
+      gameArr[i] = new Pawn(2);
     }
 
-    gameArr[7][0].piece = new Rook(1);
-    gameArr[7][7].piece = new Rook(1);
-    gameArr[7][1].piece = new Knight(1);
-    gameArr[7][6].piece = new Knight(1);
-    gameArr[7][5].piece = new Bishop(1);
-    gameArr[7][2].piece = new Bishop(1);
-    gameArr[7][3].piece = new Queen(1);
-    gameArr[7][4].piece = new King(1);
+    gameArr[56] = new Rook(1);
+    gameArr[63] = new Rook(1);
+    gameArr[57] = new Knight(1);
+    gameArr[62] = new Knight(1);
+    gameArr[58] = new Bishop(1);
+    gameArr[61] = new Bishop(1);
+    gameArr[59] = new Queen(1);
+    gameArr[60] = new King(1);
 
-    gameArr[0][0].piece = new Rook(2);
-    gameArr[0][7].piece = new Rook(2);
-    gameArr[0][1].piece = new Knight(2);
-    gameArr[0][6].piece = new Knight(2);
-    gameArr[0][5].piece = new Bishop(2);
-    gameArr[0][2].piece = new Bishop(2);
-    gameArr[0][3].piece = new Queen(2);
-    gameArr[0][4].piece = new King(2);
+    gameArr[0] = new Rook(2);
+    gameArr[7] = new Rook(2);
+    gameArr[1] = new Knight(2);
+    gameArr[6] = new Knight(2);
+    gameArr[5] = new Bishop(2);
+    gameArr[2] = new Bishop(2);
+    gameArr[3] = new Queen(2);
+    gameArr[4] = new King(2);
+
+    gameArr[35] = new Bishop(1);
 
     dispatch(updateBoard(gameArr));
+  }
+
+  updateSelectedPiece(piece) {
+    dispatch(setSelectedPiece(piece));
   }
 }
 

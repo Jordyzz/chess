@@ -6,30 +6,34 @@ import { useSelector } from '@redux/useSelector';
 import { gameService } from '@core/GameService';
 
 const GameBoard = () => {
-  const { board } = useSelector(state => state.game);
+  const { board, selectedPiece } = useSelector(state => state.game);
 
   useEffect(() => {
     gameService.initBoard();
   }, []);
 
-  const isEven = (num: number) => {
-    return num % 2 === 0;
+  const isLight = (idx: number) => {
+    if (idx < 8 && idx % 2 == 0) return true;
+
+    if (Math.floor(idx / 8) % 2 == 0 && idx % 2 == 0) return true;
+
+    if (Math.floor(idx / 8) % 2 !== 0 && idx % 2 !== 0) return true;
   };
+
+  console.log(selectedPiece && selectedPiece.getPossibleMoves(35));
 
   return (
     <div className={styles.wrapper}>
-      {board.map((c, cIdx) =>
-        c.map((r, rIdx) => {
-          return (
-            <Square
-              key={r.index}
-              index={r.index}
-              isLight={(isEven(cIdx) && isEven(rIdx)) || (!isEven(cIdx) && !isEven(rIdx))}
-              piece={r.piece}
-            />
-          );
-        })
-      )}
+      {board.map((square, idx) => (
+        <Square
+          key={idx}
+          index={idx}
+          isLight={isLight(idx)}
+          piece={square}
+          color={null}
+          setSelected={gameService.updateSelectedPiece}
+        />
+      ))}
     </div>
   );
 };

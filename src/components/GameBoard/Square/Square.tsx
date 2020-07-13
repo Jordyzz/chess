@@ -6,14 +6,12 @@ import { SquareProps } from './Square.interface';
 import Icon from '@components/Icon';
 
 const Square = (props: SquareProps) => {
-  const { index, isLight, piece } = props;
+  const { index, isLight, piece, color, setSelected } = props;
 
   return (
     <div
-      className={classNames(
-        styles.wrapper,
-        isLight ? styles.evenBackground : styles.oddBackground
-      )}>
+      className={classNames(styles.wrapper, isLight ? styles.evenBackground : styles.oddBackground)}
+      onClick={() => setSelected(piece)}>
       {piece && <Icon pieceIcon={piece.icon} />}
     </div>
   );

@@ -11,4 +11,15 @@ export abstract class Piece {
   }
 
   abstract getPossibleMoves(src: number): Array<number>;
+
+  addMoveIndex(piecePos, potentialPos, board, possibleMoves) {
+    if (!board[potentialPos]) possibleMoves.push(potentialPos);
+    else if (board[potentialPos].player === board[piecePos].player) return false;
+    else {
+      possibleMoves.push(potentialPos);
+      return false;
+    }
+
+    return true;
+  }
 }
