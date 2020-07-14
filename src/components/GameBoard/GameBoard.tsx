@@ -20,7 +20,7 @@ const GameBoard = () => {
     if (Math.floor(idx / 8) % 2 !== 0 && idx % 2 !== 0) return true;
   };
 
-  console.log(selectedPiece && selectedPiece.getPossibleMoves(35));
+  console.log(selectedPiece && selectedPiece.getPossibleMoves(32));
 
   return (
     <div className={styles.wrapper}>

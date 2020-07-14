@@ -34,7 +34,7 @@ class GameService {
     gameArr[3] = new Queen(2);
     gameArr[4] = new King(2);
 
-    gameArr[35] = new Bishop(1);
+    gameArr[32] = new King(1);
 
     dispatch(updateBoard(gameArr));
   }

@@ -22,4 +22,12 @@ export abstract class Piece {
 
     return true;
   }
+
+  isSameRowMove(piecePos, potentialPos) {
+    return Math.floor(piecePos / 8) % 2 === Math.floor(potentialPos / 8) % 2;
+  }
+
+  isCrossMove(piecePos, potentialPos) {
+    return Math.abs(Math.floor(piecePos / 8) - Math.floor(potentialPos / 8)) === 1;
+  }
 }

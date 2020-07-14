@@ -19,18 +19,10 @@ export class Rook extends Piece {
       resume = this.addMoveIndex(idx, i, board, possibleMoves);
     }
 
-    for (
-      let i = idx - 1, resume = true;
-      Math.floor(i / 8) % 2 === Math.floor(idx / 8) % 2 && resume;
-      i--
-    )
+    for (let i = idx - 1, resume = true; this.isSameRowMove(i, idx) && resume; i--)
       resume = this.addMoveIndex(idx, i, board, possibleMoves);
 
-    for (
-      let i = idx + 1, resume = true;
-      Math.floor(i / 8) % 2 === Math.floor(idx / 8) % 2 && resume;
-      i++
-    )
+    for (let i = idx + 1, resume = true; this.isSameRowMove(i, idx) && resume; i++)
       resume = this.addMoveIndex(idx, i, board, possibleMoves);
 
     return possibleMoves;
