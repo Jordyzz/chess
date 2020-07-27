@@ -19,4 +19,16 @@ export interface ConfigState {
 export interface GameState {
   board: Array<Piece>;
   selectedPiece: Piece;
+  currentTurn: player;
+  player1: PlayerPieces;
+  player2: PlayerPieces;
+  isPromotion: boolean;
+  isCheckmate: boolean;
 }
+
+export interface PlayerPieces {
+  alive: Array<Piece>;
+  graveyard: Array<Piece>;
+}
+
+type player = 1 | 2;

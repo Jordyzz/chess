@@ -10,9 +10,45 @@ export const setSelectedPiece = (payload): StoreAction => ({
   payload
 });
 
+export const clearSelection = () => ({
+  type: 'game/CLEAR_SELECTION'
+});
+
+export const toggleTurn = () => ({
+  type: 'game/TOGGLE_TURN'
+});
+
+export const initPlayersPieces = (payload): StoreAction => ({
+  type: 'game/INIT_PLAYERS_PIECES',
+  payload
+});
+
+export const pieceToGraveyard = (payload): StoreAction => ({
+  type: 'game/PIECE_TO_GRAVEYARD',
+  payload
+});
+
+export const updatePieces = (payload): StoreAction => ({
+  type: 'game/UPDATE_PIECES',
+  payload
+});
+
+export const togglePromotion = () => ({
+  type: 'game/TOGGLE_PROMOTION'
+});
+
+export const checkmate = () => ({
+  type: 'game/CHECKMATE'
+});
+
 const initialState: GameState = {
   board: [],
-  selectedPiece: null
+  selectedPiece: null,
+  currentTurn: 1,
+  player1: null,
+  player2: null,
+  isPromotion: false,
+  isCheckmate: false
 };
 
 export default function gameReducer(state: GameState = initialState, action: StoreAction) {
@@ -21,6 +57,43 @@ export default function gameReducer(state: GameState = initialState, action: Sto
       return { ...state, board: action.payload };
     case 'game/SET_SELECTED_PIECE':
       return { ...state, selectedPiece: action.payload };
+    case 'game/CLEAR_SELECTION':
+      return { ...state, selectedPiece: null };
+    case 'game/TOGGLE_TURN':
+      return { ...state, currentTurn: state.currentTurn === 1 ? 2 : 1 };
+    case 'game/INIT_PLAYERS_PIECES':
+      return {
+        ...state,
+        player1: { alive: action.payload.player1, graveyard: [] },
+        player2: { alive: action.payload.player2, graveyard: [] }
+      };
+    case 'game/PIECE_TO_GRAVEYARD':
+      const playerKey = `player${action.payload.player}`;
+      return {
+        ...state,
+        [playerKey]: {
+          alive: state[playerKey].alive.filter(p => p !== action.payload),
+          graveyard: [...state[playerKey].graveyard, action.payload]
+        }
+      };
+    case 'game/UPDATE_PIECES':
+      return {
+        ...state,
+        [action.payload.player]: {
+          alive: [...action.payload.pieces],
+          graveyard: state[action.payload.player].graveyard
+        }
+      };
+    case 'game/TOGGLE_PROMOTION':
+      return {
+        ...state,
+        isPromotion: !state.isPromotion
+      };
+    case 'game/CHECKMATE':
+      return {
+        ...state,
+        isCheckmate: true
+      };
     default:
       return state;
   }

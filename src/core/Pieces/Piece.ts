@@ -4,15 +4,18 @@ export abstract class Piece {
   public pieceId;
   public player;
   public icon;
+  public position;
 
-  constructor(player, piece) {
+  constructor(player, piece, position) {
     this.player = player;
     this.icon = pieceIcons[player][piece]; // add map of icons
+    this.position = position;
   }
 
-  abstract getPossibleMoves(src: number): Array<number>;
+  abstract getPossibleMoves(board: Array<Piece>): Array<number>;
 
   addMoveIndex(piecePos, potentialPos, board, possibleMoves) {
+    if (potentialPos > 63 || potentialPos < 0) return false;
     if (!board[potentialPos]) possibleMoves.push(potentialPos);
     else if (board[potentialPos].player === board[piecePos].player) return false;
     else {

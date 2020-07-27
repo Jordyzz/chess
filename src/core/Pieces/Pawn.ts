@@ -1,28 +1,72 @@
 import { Piece } from './Piece';
-import { getState } from '@src/redux/store';
 
 export class Pawn extends Piece {
-  constructor(player) {
-    super(player, 1);
+  constructor(player, position) {
+    super(player, 1, position);
     this.pieceId = 1;
   }
 
-  getPossibleMoves(idx) {
-    const { board } = getState().game;
+  getPossibleMoves(board) {
     const possibleMoves = [];
+
+    this.isCrossMove(this.position, this.generatePlayerDirection(this.player, this.position, 8)) &&
+      this.addMoveIndex(
+        this.position,
+        this.generatePlayerDirection(this.player, this.position, 8),
+        board,
+        possibleMoves
+      );
+    this.isInitialPos() &&
+      this.isTwoRowJump(
+        this.position,
+        this.generatePlayerDirection(this.player, this.position, 16)
+      ) &&
+      this.addMoveIndex(
+        this.position,
+        this.generatePlayerDirection(this.player, this.position, 16),
+        board,
+        possibleMoves
+      );
+
+    this.isCrossMove(this.position, this.generatePlayerDirection(this.player, this.position, 9)) &&
+      this.addEatIndex(
+        this.generatePlayerDirection(this.player, this.position, 9),
+        board,
+        possibleMoves
+      );
+    this.isCrossMove(this.position, this.generatePlayerDirection(this.player, this.position, 7)) &&
+      this.addEatIndex(
+        this.generatePlayerDirection(this.player, this.position, 7),
+        board,
+        possibleMoves
+      );
 
     return possibleMoves;
   }
 
-  isInitialPos(idx) {
-    return this.player == 1 ? Math.floor(idx / 8) == 6 : Math.floor(idx / 8) == 2;
+  isInitialPos() {
+    return this.player == 1
+      ? Math.floor(this.position / 8) === 6
+      : Math.floor(this.position / 8) === 1;
   }
 
-  canPawnEat(idx, board): Array<number> {
-    const eatPossibilities = [];
+  addEatIndex(potentialPos, board: Array<Piece>, possibleMoves) {
+    board[potentialPos] &&
+      board[potentialPos].player !== this.player &&
+      possibleMoves.push(potentialPos);
+  }
 
-    board[idx];
+  addMoveIndex(piecePos, potentialPos, board, possibleMoves) {
+    if (!board[potentialPos]) possibleMoves.push(potentialPos);
 
-    return eatPossibilities;
+    return true;
+  }
+
+  generatePlayerDirection(player, piecePos, direction) {
+    return player === 1 ? piecePos - direction : piecePos + direction;
+  }
+
+  isTwoRowJump(piecePos, potentialPos) {
+    return Math.abs(Math.floor(piecePos / 8) - Math.floor(potentialPos / 8)) === 2;
   }
 }

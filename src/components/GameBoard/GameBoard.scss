@@ -1,4 +1,10 @@
 .wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gameContainer {
   display: grid;
   grid-template-columns: repeat(8, 70px);
   grid-template-rows: repeat(8, 70px);

@@ -3,7 +3,7 @@ import { Piece } from '@core/Pieces/Piece';
 export interface SquareProps {
   index: number;
   isLight: boolean;
-  color: string;
+  isColored: boolean;
   piece: Piece;
-  setSelected: (idx) => void;
+  setSelected: (piece, idx) => void;
 }

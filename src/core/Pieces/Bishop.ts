@@ -1,27 +1,41 @@
 import { Piece } from './Piece';
-import { getState } from '@src/redux/store';
 
 export class Bishop extends Piece {
-  constructor(player) {
-    super(player, 4);
+  constructor(player, position) {
+    super(player, 4, position);
     this.pieceId = 4;
   }
 
-  getPossibleMoves(idx) {
-    const { board } = getState().game;
+  getPossibleMoves(board) {
     const possibleMoves = [];
 
-    for (let i = idx - 7, j = idx, resume = true; this.isCrossMove(i, j) && resume; i -= 7, j -= 7)
-      resume = this.addMoveIndex(idx, i, board, possibleMoves);
+    for (
+      let i = this.position - 7, j = this.position, resume = true;
+      this.isCrossMove(i, j) && resume;
+      i -= 7, j -= 7
+    )
+      resume = this.addMoveIndex(this.position, i, board, possibleMoves);
 
-    for (let i = idx + 7, j = idx, resume = true; this.isCrossMove(i, j) && resume; i += 7, j += 7)
-      resume = this.addMoveIndex(idx, i, board, possibleMoves);
+    for (
+      let i = this.position + 7, j = this.position, resume = true;
+      this.isCrossMove(i, j) && resume;
+      i += 7, j += 7
+    )
+      resume = this.addMoveIndex(this.position, i, board, possibleMoves);
 
-    for (let i = idx + 9, j = idx, resume = true; this.isCrossMove(i, j) && resume; i += 9, j += 9)
-      resume = this.addMoveIndex(idx, i, board, possibleMoves);
+    for (
+      let i = this.position + 9, j = this.position, resume = true;
+      this.isCrossMove(i, j) && resume;
+      i += 9, j += 9
+    )
+      resume = this.addMoveIndex(this.position, i, board, possibleMoves);
 
-    for (let i = idx - 9, j = idx, resume = true; this.isCrossMove(i, j) && resume; i -= 9, j -= 9)
-      resume = this.addMoveIndex(idx, i, board, possibleMoves);
+    for (
+      let i = this.position - 9, j = this.position, resume = true;
+      this.isCrossMove(i, j) && resume;
+      i -= 9, j -= 9
+    )
+      resume = this.addMoveIndex(this.position, i, board, possibleMoves);
 
     return possibleMoves;
   }
