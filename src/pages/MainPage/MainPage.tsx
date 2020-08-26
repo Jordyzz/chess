@@ -1,12 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './MainPage.scss';
-import GameBoard from '@components/GameBoard/GameBoard';
 
 function MainPage() {
   return (
     <div className={styles.wrapper}>
-      <GameBoard />
+      <Link to="/chess/local">
+        <button className={styles.menuButton}>Play Local</button>
+      </Link>
+      <Link to="/chess/room">
+        <button className={styles.menuButton}>Find Online Match</button>
+      </Link>
     </div>
   );
 }

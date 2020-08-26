@@ -10,7 +10,7 @@ import { Piece } from '@core/Pieces/Piece';
 import PromotionMenu from '@components/PromotionMenu';
 
 const GameBoard = () => {
-  const { board, selectedPiece, currentTurn, isCheckmate, isPromotion } = useSelector(
+  const { board, selectedPiece, currentTurn, isCheckmate, isPromotion, player } = useSelector(
     state => state.game
   );
 
@@ -22,7 +22,7 @@ const GameBoard = () => {
     () =>
       selectedPiece &&
       gameService.filterCheckMoves(selectedPiece, selectedPiece.getPossibleMoves(board)),
-    [selectedPiece]
+    [selectedPiece, board]
   );
 
   const isLight = (idx: number) => {
@@ -35,18 +35,18 @@ const GameBoard = () => {
 
   const squareOnClick = useCallback(
     (piece: Piece, index) => {
-      if (isCheckmate || isPromotion) return;
+      if (isCheckmate || isPromotion || currentTurn !== player.id) return;
 
       selectedPiece
         ? possiblesMoves.includes(index)
-          ? gameService.movePiece(index)
+          ? gameService.movePiece(index, player)
           : gameService.clearSelection()
         : piece &&
           currentTurn === piece.player &&
           piece.getPossibleMoves(board).length > 0 &&
           dispatch(setSelectedPiece(piece));
     },
-    [selectedPiece, possiblesMoves, currentTurn, isCheckmate, isPromotion]
+    [selectedPiece, possiblesMoves, currentTurn, isCheckmate, isPromotion, player, board]
   );
 
   const promotionOnClick = useCallback((promotionPiece: string) => {

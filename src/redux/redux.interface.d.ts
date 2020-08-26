@@ -17,6 +17,7 @@ export interface ConfigState {
 }
 
 export interface GameState {
+  player: Player;
   board: Array<Piece>;
   selectedPiece: Piece;
   currentTurn: player;
@@ -32,3 +33,9 @@ export interface PlayerPieces {
 }
 
 type player = 1 | 2;
+
+export interface Player {
+  socket: any;
+  id: player;
+  room: string;
+}

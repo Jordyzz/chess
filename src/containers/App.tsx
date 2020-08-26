@@ -6,6 +6,8 @@ import history from '@core/history';
 import MainPage from '@pages/MainPage';
 import styles from './App.scss';
 import ToastHandler from '@components/ToastHandler';
+import GamePage from '@pages/GamePage/GamePage';
+import RoomPage from '@pages/RoomPage';
 
 function App() {
   return (
@@ -15,6 +17,9 @@ function App() {
         <div className={styles.content}>
           <Switch>
             <Route path="/home" component={MainPage} />
+            <Route path="/chess/room" component={RoomPage} />
+            <Route path="/chess/local" component={GamePage} />
+            <Route path="/chess/online" component={GamePage} />
             <Redirect to="/home" />
           </Switch>
         </div>

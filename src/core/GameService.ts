@@ -1,3 +1,5 @@
+import { omit } from 'lodash';
+
 import { dispatch, getState } from '@redux/store';
 import {
   updateBoard,
@@ -14,6 +16,7 @@ import { pieceFactory } from './Pieces/PieceFactory';
 import { Rook } from './Pieces/Rook';
 import { King } from './Pieces/King';
 import { Piece } from './Pieces/Piece';
+import { Player } from '@redux/redux.interface';
 
 class GameService {
   initBoard() {
@@ -80,7 +83,7 @@ class GameService {
     dispatch(clearSelection());
   }
 
-  movePiece(newPos: number) {
+  movePiece(newPos: number, player: Player) {
     const { board, selectedPiece } = getState().game;
 
     if (board[newPos]) {
@@ -105,6 +108,14 @@ class GameService {
       dispatch(toggleTurn());
       this.isCheckmate(board);
     }
+
+    player && this.updateGameState(player);
+  }
+
+  updateGameState(player: Player) {
+    const game = omit(getState().game, 'player');
+    console.log('to: ', player.socket.to);
+    player.socket.emit('moveMade', game, player.room);
   }
 
   isPawnPromotion(selectedPiece: Piece) {

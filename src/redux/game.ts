@@ -41,7 +41,18 @@ export const checkmate = () => ({
   type: 'game/CHECKMATE'
 });
 
+export const setPlayer = (payload): StoreAction => ({
+  type: 'game/SET_PLAYER',
+  payload
+});
+
+export const updateGameState = (payload): StoreAction => ({
+  type: 'game/UPDATE_GAME_STATE',
+  payload
+});
+
 const initialState: GameState = {
+  player: null,
   board: [],
   selectedPiece: null,
   currentTurn: 1,
@@ -94,6 +105,13 @@ export default function gameReducer(state: GameState = initialState, action: Sto
         ...state,
         isCheckmate: true
       };
+    case 'game/SET_PLAYER':
+      return {
+        ...state,
+        player: action.payload
+      };
+    case 'game/UPDATE_GAME_STATE':
+      return { ...action.payload, player: state.player };
     default:
       return state;
   }

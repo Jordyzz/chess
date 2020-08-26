@@ -1,5 +1,5 @@
 import { getState, dispatch } from '@redux/store';
-import { setTheme } from '@src/redux/config';
+import { setTheme } from '@redux/config';
 
 class ThemeService {
   private themes = {
